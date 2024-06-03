@@ -1,11 +1,19 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Header from "./Header/Header";
+import Sidebar from "./Sidebar/Sidebar";
+import RefetchAll from "../../../tools/RefetchAll";
 
 export default function DashboardLayout() {
 	return (
 		<div>
-			Layout
-			<Outlet />
+			<Header />
+			<Sidebar />
+			{/* Content */}
+			<div className="bg-slate-200">
+				<RefetchAll />
+				<Outlet />
+			</div>
 		</div>
 	);
 }
