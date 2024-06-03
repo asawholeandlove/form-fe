@@ -19,12 +19,8 @@ const schemaApis = {
 		return axiosConfig.delete(`${apiUrls.schemas}/${id}`);
 	},
 
-	create(schema: Schema) {
+	save(schema: Schema) {
 		return axiosConfig.post(apiUrls.schemas, schema);
-	},
-
-	update(id: number, schema: Schema) {
-		return axiosConfig.put(`${apiUrls.schemas}/${id}`, schema);
 	}
 };
 

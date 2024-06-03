@@ -10,7 +10,7 @@ export default function Form() {
 	const id = Number(useParams()?.id);
 
 	const { data } = useQuery({
-		queryKey: ["schemas"],
+		queryKey: ["schema"],
 		queryFn: () => schemaApis.getById(id)
 	});
 
