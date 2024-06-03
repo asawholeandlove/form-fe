@@ -5,30 +5,32 @@ import { demoJson } from "./jsons";
 import { Button, Card } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import schemaApis from "./apis/schema.apis";
+import axios from "axios";
+import SchemaSelect from "./components/SchemaSelect";
+import { useGetCache } from "./hooks/query/useGetCache";
+import { Schema } from "./types/Schema.types";
+import { useState } from "react";
 
 function App() {
-	// const survey = new Model(demoJson);
+	const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
-	const { data } = useQuery({
-		queryKey: ["schemas"],
-		queryFn: () => schemaApis.getAll()
-	});
-	console.log("data :", data);
+	const data = useGetCache(["schemas"]) as Schema[] | undefined;
 
-	// const handleFinish = (sender: SurveyModel) => {
-	// 	const results = sender.data;
-	// 	console.log("results :", results);
-	// };
-
-	// survey.onComplete.add(handleFinish);
+	const survey = new Model(data?.find((item) => item.id === selectedId)?.data);
 
 	return (
 		<>
 			<div className="mb-2 text-center">
-				<Button>Hello nè</Button>
+				<SchemaSelect
+					value={selectedId}
+					onChange={setSelectedId}
+					className="min-w-[200px]"
+					placeholder="Select schema"
+					allowClear
+				/>
 			</div>
 
-			{/* <Survey model={survey} /> */}
+			<Survey model={survey} />
 		</>
 	);
 }
