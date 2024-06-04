@@ -1,10 +1,10 @@
-import { Button, Form, Input, Modal, ModalProps } from "antd";
+import { Button, Form, Input, Modal, ModalProps, message } from "antd";
 import { useEffect, useState } from "react";
 import schemaApis from "~/apis/schema.apis";
 import { Schema } from "~/types/Schema.types";
 
 interface Props extends ModalProps {
-	record: Schema;
+	record?: Schema;
 	refetch: () => void;
 }
 
@@ -23,12 +23,24 @@ export default function ModalForm({ record, refetch, ...antdProps }: Props) {
 	}, [form, record, open]);
 
 	const handleFinish = async (values: any) => {
+		let json = values.data;
+
+		try {
+			if (json) {
+				json = JSON.parse(json);
+			}
+		} catch (error) {
+			console.log("error :", error);
+			message.error("Json không hợp lệ");
+			return;
+		}
+
 		try {
 			setLoading(true);
 			await schemaApis.save({
 				id: record?.id,
 				...values,
-				data: JSON.parse(values.data || "{}")
+				data: json
 			});
 			refetch();
 			form.resetFields();

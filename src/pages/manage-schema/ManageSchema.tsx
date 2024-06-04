@@ -20,7 +20,7 @@ export default function ManageSchema() {
 	const refetch = useRefetch(["schemas"]);
 
 	const [openModal, setOpenModal] = useState(false);
-	const [record, setRecord] = useState<Schema>({} as any);
+	const [record, setRecord] = useState<Schema | undefined>(undefined);
 
 	return (
 		<div>
@@ -29,7 +29,7 @@ export default function ManageSchema() {
 					<Button
 						type="primary"
 						onClick={() => {
-							setRecord({} as any);
+							setRecord(undefined);
 							setOpenModal(true);
 						}}
 					>
